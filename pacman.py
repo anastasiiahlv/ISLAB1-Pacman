@@ -1,5 +1,4 @@
 class Pacman:
-    """Клас пакмена"""
 
     def __init__(self, x, y):
         self.x = x
@@ -9,7 +8,6 @@ class Pacman:
         self.lives = 3
 
     def move(self, direction, maze):
-        """Рух пакмена"""
         dx, dy = direction.value
         new_x, new_y = self.x + dx, self.y + dy
 
@@ -18,7 +16,6 @@ class Pacman:
             self.x, self.y = new_x, new_y
             self.direction = direction.value
 
-            # Збір точок
             if maze[new_y][new_x] == 2:
                 maze[new_y][new_x] = 0
                 self.score += 10

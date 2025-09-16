@@ -9,7 +9,7 @@ class MazeGenerator:
         self.maze = [[1 for _ in range(width)] for _ in range(height)]
 
     def generate_maze(self):
-        """Генерує лабіринт використовуючи алгоритм recursive backtracking"""
+        """Генерація лабіринту за допомогою алгоритму recursive backtracking"""
         stack = [(1, 1)]
         self.maze[1][1] = 0
 
@@ -33,16 +33,22 @@ class MazeGenerator:
             else:
                 stack.pop()
 
-        # Додаємо точки та бонуси
         self._add_dots_and_bonuses()
         return self.maze
 
     def _add_dots_and_bonuses(self):
-        """Додає точки та бонуси в лабіринт"""
+        empty_spaces = []
+
         for y in range(self.height):
             for x in range(self.width):
                 if self.maze[y][x] == 0:
-                    if random.random() < 0.8:  # 80% шанс на звичайну точку
-                        self.maze[y][x] = 2
-                    elif random.random() < 0.05:  # 5% шанс на бонус
-                        self.maze[y][x] = 3
+                    empty_spaces.append((x, y))
+
+        for x, y in empty_spaces:
+            if random.random() < 0.8:
+                self.maze[y][x] = 2
+
+        if len(empty_spaces) >= 3:
+            bonus_positions = random.sample(empty_spaces, 1)
+            for x, y in bonus_positions:
+                self.maze[y][x] = 3
